@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ESCAPE THE SCHOOL — Halloween Disturbance: Episode 2</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Noto+Sans+Georgian:wght@400;600;800&family=Rubik:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --bg:#08050e;
+  --orange:#ff7a18;
+  --orange-2:#ffb347;
+  --orange-3:#ffd9a8;
+  --blood:#c1121f;
+  --purple:#8b2fc9;
+  --purple-2:#4a1a6b;
+  --text:#f4ecff;
+  --muted:#b6a4d2;
+  --line:rgba(255,122,24,.22);
+  --card:linear-gradient(160deg, rgba(38,18,58,.88), rgba(15,7,25,.92));
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:'Rubik','Noto Sans Georgian',system-ui,-apple-system,sans-serif;
+  color:var(--text);
+  overflow-x:hidden;
+  background:
+    radial-gradient(1200px 800px at 50% -15%, rgba(139,47,201,.42), transparent 60%),
+    radial-gradient(900px 650px at 5% 40%, rgba(255,122,24,.16), transparent 65%),
+    radial-gradient(950px 750px at 98% 80%, rgba(193,18,31,.22), transparent 65%),
+    linear-gradient(180deg,#0b0613,#070310 45%,#0c0514);
+  background-attachment:fixed;
+}
+img,svg{display:block;max-width:100%}
+::selection{background:rgba(255,122,24,.45);color:#fff}
+
+/* ============================================================
+   AMBIENT DECOR LAYER
+   ============================================================ */
+.fx{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.bat{
+  position:absolute;width:74px;opacity:.5;
+  filter:drop-shadow(0 0 10px rgba(255,122,24,.5));
+  animation:fly 26s linear infinite;
+}
+.bat.b1{top:12%;animation-duration:24s;animation-delay:-2s}
+.bat.b2{top:34%;width:52px;animation-duration:32s;animation-delay:-11s;opacity:.35}
+.bat.b3{top:60%;width:64px;animation-duration:29s;animation-delay:-19s;opacity:.3}
+.bat.b4{top:82%;width:44px;animation-duration:36s;animation-delay:-6s;opacity:.25}
+.bat.b5{top:47%;width:58px;animation-duration:27s;animation-delay:-15s;opacity:.28}
+@keyframes fly{
+  0%{transform:translate(-15vw,0) rotate(-7deg) scale(.9)}
+  25%{transform:translate(28vw,-5vh) rotate(6deg) scale(1)}
+  50%{transform:translate(58vw,4vh) rotate(-5deg) scale(.95)}
+  75%{transform:translate(86vw,-4vh) rotate(7deg) scale(1.05)}
+  100%{transform:translate(120vw,1vh) rotate(-6deg) scale(.9)}
+}
+.cobweb{position:fixed;width:230px;opacity:.22;pointer-events:none;z-index:1}
+.cobweb.tl{top:0;left:0}
+.cobweb.tr{top:0;right:0;transform:scaleX(-1)}
+.cobweb.bl{bottom:0;left:0;transform:scaleY(-1)}
+.cobweb.br{bottom:0;right:0;transform:scale(-1,-1)}
+.pumpkin-fx{
+  position:fixed;width:70px;z-index:1;pointer-events:none;
+  filter:drop-shadow(0 0 26px rgba(255,122,24,.85)) drop-shadow(0 0 60px rgba(193,18,31,.45));
+  animation:pkFloat 7s ease-in-out infinite, pkGlow 3.4s ease-in-out infinite;
+}
+.pf1{left:3%;bottom:14%;width:78px}
+.pf2{right:4%;top:22%;width:60px;animation-delay:-2s,-1.2s}
+.pf3{left:9%;top:12%;width:46px;animation-delay:-4s,-2.4s}
+.pf4{right:9%;bottom:12%;width:54px;animation-delay:-1s,-.6s}
+@keyframes pkFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-20px) rotate(2deg)}}
+@keyframes pkGlow{
+  0%,100%{filter:drop-shadow(0 0 22px rgba(255,122,24,.75)) drop-shadow(0 0 50px rgba(193,18,31,.35));}
+  50%{filter:drop-shadow(0 0 40px rgba(255,170,60,1)) drop-shadow(0 0 90px rgba(193,18,31,.6));}
+}
+#embers{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.ember{
+  position:absolute;bottom:-24px;border-radius:50%;
+  background:radial-gradient(circle, #ffe6bd, #ff9b2f 45%, rgba(255,122,24,0) 72%);
+  animation-name:rise;animation-timing-function:linear;animation-iteration-count:infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0) translateX(0) scale(1);opacity:0}
+  8%{opacity:var(--o,.6)}
+  85%{opacity:var(--o,.6)}
+  100%{transform:translateY(-112vh) translateX(50px) scale(.35);opacity:0}
+}
+.vignette{
+  position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%, transparent 42%, rgba(3,1,7,.72) 100%);
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;gap:14px;
+  padding:14px 22px;
+  background:linear-gradient(180deg, rgba(9,4,16,.92), rgba(9,4,16,.35));
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand{
+  font-family:'Creepster',cursive;font-size:1.15rem;letter-spacing:1.4px;
+  color:var(--orange-3);white-space:nowrap;
+  text-shadow:0 0 12px rgba(255,122,24,.9), 0 0 30px rgba(193,18,31,.6);
+}
+.nav-spacer{flex:1}
+.lang-btn{
+  cursor:pointer;border-radius:999px;padding:9px 18px;
+  font-family:inherit;font-weight:800;font-size:.76rem;letter-spacing:.1em;
+  color:var(--orange-3);background:rgba(255,122,24,.1);
+  border:1px solid rgba(255,122,24,.45);transition:.25s;
+}
+.lang-btn:hover{
+  background:rgba(255,122,24,.26);color:#fff;
+  box-shadow:0 0 24px rgba(255,122,24,.55);
+}
+
+/* ============================================================
+   SCREENS
+   ============================================================ */
+.stage{
+  position:relative;z-index:5;
+  min-height:100vh;
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:110px 20px 70px;
+}
+.screen{display:none;width:100%;max-width:980px}
+.screen.active{
+  display:block;
+  animation:screenIn .8s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes screenIn{
+  from{opacity:0;transform:translateY(26px) scale(.985);filter:blur(7px)}
+  to{opacity:1;transform:none;filter:blur(0)}
+}
+
+/* ============================================================
+   SHARED
+   ============================================================ */
+.logo{
+  font-family:'Creepster',cursive;text-align:center;
+  font-size:clamp(2rem,6.5vw,4.4rem);line-height:.95;letter-spacing:2px;margin:0;
+  background:linear-gradient(180deg,#ffe9cf 0%,var(--orange-2) 26%,var(--orange) 56%,var(--blood) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 18px rgba(255,122,24,.85)) drop-shadow(0 0 50px rgba(193,18,31,.6));
+  animation:flicker 6s infinite;
+}
+@keyframes flicker{
+  0%,91%,100%{opacity:1}
+  92%{opacity:.7}
+  94%{opacity:1}
+  96%{opacity:.85}
+  97%{opacity:1}
+}
+.eyebrow{
+  display:block;text-align:center;margin:14px auto 0;width:fit-content;
+  font-size:.7rem;font-weight:800;letter-spacing:.34em;text-transform:uppercase;
+  color:#ffd9a8;padding:7px 18px;border-radius:999px;
+  background:rgba(193,18,31,.2);border:1px solid rgba(255,122,24,.5);
+  box-shadow:0 0 24px rgba(193,18,31,.4) inset;
+}
+.divider{
+  width:120px;height:3px;margin:22px auto 0;border-radius:99px;
+  background:linear-gradient(90deg,transparent,var(--orange),var(--blood),transparent);
+  box-shadow:0 0 20px rgba(255,122,24,.85);
+}
+
+/* ============================================================
+   SCREEN 1 — IDEA
+   ============================================================ */
+.idea-card{
+  margin-top:34px;
+  border-radius:26px;padding:2px;
+  background:linear-gradient(135deg, rgba(255,122,24,.85), rgba(139,47,201,.7) 48%, rgba(193,18,31,.85));
+  box-shadow:0 0 80px rgba(139,47,201,.3), 0 32px 80px rgba(0,0,0,.72);
+}
+.idea-inner{
+  border-radius:24px;padding:34px 30px 32px;
+  background:
+    radial-gradient(700px 300px at 50% 0%, rgba(255,122,24,.18), transparent 65%),
+    linear-gradient(170deg,#1a0c29,#0b0515 72%);
+}
+.idea-inner h2{
+  font-family:'Creepster',cursive;font-weight:400;margin:0 0 10px;text-align:center;
+  font-size:clamp(1.5rem,4vw,2.3rem);letter-spacing:1.4px;color:var(--orange-3);
+  text-shadow:0 0 22px rgba(255,122,24,.8);
+}
+.idea-sub{
+  margin:0 auto 26px;max-width:560px;text-align:center;
+  color:var(--muted);font-size:.93rem;line-height:1.7;
+}
+.field-label{
+  display:block;margin:0 0 10px;font-size:.72rem;font-weight:800;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--orange-2);
+}
+textarea{
+  width:100%;min-height:150px;resize:vertical;
+  padding:16px 18px;border-radius:16px;
+  font-family:inherit;font-size:.95rem;line-height:1.65;color:var(--text);
+  background:rgba(5,2,10,.72);
+  border:1px solid rgba(255,122,24,.32);
+  box-shadow:0 0 30px rgba(139,47,201,.18) inset;
+  outline:none;transition:.28s;
+}
+textarea::placeholder{color:#7d6c96}
+textarea:focus{
+  border-color:rgba(255,122,24,.85);
+  box-shadow:0 0 0 3px rgba(255,122,24,.14), 0 0 40px rgba(255,122,24,.28) inset;
+  background:rgba(10,4,20,.85);
+}
+textarea.shake{animation:shake .45s}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(5px)}
+}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  cursor:pointer;text-decoration:none;border:0;
+  font-family:inherit;font-weight:800;font-size:.86rem;
+  letter-spacing:.13em;text-transform:uppercase;
+  padding:15px 30px;border-radius:15px;transition:.28s;
+}
+.btn-primary{
+  color:#1a0a04;
+  background:linear-gradient(180deg,var(--orange-2),var(--orange) 55%,#d6530a);
+  box-shadow:0 0 34px rgba(255,122,24,.6), 0 10px 24px rgba(0,0,0,.55);
+}
+.btn-primary:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 0 60px rgba(255,122,24,.95), 0 16px 34px rgba(0,0,0,.6);
+}
+.btn-primary:active{transform:translateY(-1px) scale(.99)}
+.btn-primary.sent{
+  background:linear-gradient(180deg,#8be27a,#3fa32c);
+  box-shadow:0 0 44px rgba(80,220,80,.65);
+  color:#06180a;
+}
+.btn-ghost{
+  color:var(--orange-3);background:rgba(139,47,201,.16);
+  border:1px solid rgba(255,122,24,.42);
+}
+.btn-ghost:hover{
+  background:rgba(139,47,201,.34);color:#fff;transform:translateY(-3px);
+  box-shadow:0 0 36px rgba(139,47,201,.65);
+}
+
+.idea-actions{
+  display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:24px;
+}
+.hint{
+  margin:18px 0 0;text-align:center;font-size:.74rem;
+  letter-spacing:.08em;color:#7d6c96;
+}
+
+/* ============================================================
+   SCREEN 2 — MAIN MENU
+   ============================================================ */
+.menu-wrap{text-align:center}
+.menu-title{
+  font-family:'Creepster',cursive;margin:16px 0 0;
+  font-size:clamp(1.15rem,3.2vw,1.9rem);letter-spacing:1.3px;line-height:1.2;
+  color:var(--orange-2);
+  text-shadow:0 0 20px rgba(255,122,24,.75), 0 0 60px rgba(193,18,31,.45);
+}
+.menu-title em{font-style:normal;color:#ffd9a8}
+
+.play-btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:16px;
+  margin-top:44px;padding:22px 58px;border-radius:22px;overflow:hidden;
+  text-decoration:none;color:#1a0a04;
+  font-family:'Creepster',cursive;font-size:clamp(1.3rem,4vw,2rem);letter-spacing:2.4px;
+  background:linear-gradient(180deg,#ffe9cf,var(--orange-2) 22%,var(--orange) 60%,#d6530a);
+  box-shadow:
+    0 0 44px rgba(255,122,24,.75),
+    0 0 100px rgba(255,122,24,.35),
+    0 14px 0 rgba(110,36,0,.65),
+    0 24px 50px rgba(0,0,0,.7);
+  transition:transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s;
+  animation:playPulse 2.6s ease-in-out infinite;
+}
+@keyframes playPulse{
+  0%,100%{box-shadow:0 0 44px rgba(255,122,24,.75),0 0 100px rgba(255,122,24,.35),0 14px 0 rgba(110,36,0,.65),0 24px 50px rgba(0,0,0,.7)}
+  50%{box-shadow:0 0 70px rgba(255,150,50,1),0 0 150px rgba(255,122,24,.55),0 14px 0 rgba(110,36,0,.65),0 24px 50px rgba(0,0,0,.7)}
+}
+.play-btn::after{
+  content:"";position:absolute;top:0;left:-60%;width:45%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-18deg);
+  animation:shine 3.6s ease-in-out infinite;
+}
+@keyframes shine{
+  0%,65%{left:-60%}
+  100%{left:130%}
+}
+.play-btn:hover{
+  transform:translateY(-6px) scale(1.04);
+  box-shadow:0 0 90px rgba(255,150,50,1),0 0 180px rgba(255,122,24,.6),0 18px 0 rgba(110,36,0,.65),0 30px 60px rgba(0,0,0,.75);
+}
+.play-btn:active{transform:translateY(-2px) scale(1.01)}
+.play-icon{
+  width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  font-size:1rem;color:#fff;
+  background:rgba(26,10,4,.85);
+  box-shadow:0 0 24px rgba(0,0,0,.6) inset, 0 0 18px rgba(255,122,24,.9);
+}
+
+.menu-actions{
+  display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:30px;
+}
+.menu-note{
+  margin:34px auto 0;max-width:520px;
+  font-size:.76rem;letter-spacing:.06em;line-height:1.7;color:#7d6c96;
+}
+.menu-badges{
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px;
+}
+.chip{
+  font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  padding:7px 14px;border-radius:999px;color:var(--orange-2);
+  background:rgba(255,122,24,.1);border:1px solid rgba(255,122,24,.32);
+  box-shadow:0 0 20px rgba(255,122,24,.15) inset;
+}
+
+/* ============================================================
+   SCREEN 3 — GAME GUIDE
+   ============================================================ */
+.guide-wrap{text-align:center}
+.guide-title{
+  font-family:'Creepster',cursive;text-align:center;
+  font-size:clamp(1.8rem,5.5vw,3.2rem);letter-spacing:2px;margin:0;
+  background:linear-gradient(180deg,#ffe9cf 0%,var(--orange-2) 30%,var(--orange) 60%,var(--blood) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 16px rgba(255,122,24,.8)) drop-shadow(0 0 44px rgba(193,18,31,.5));
+}
+
+/* lives card */
+.lives-card{
+  margin:30px auto 34px;max-width:660px;
+  border-radius:22px;padding:28px 26px;text-align:center;
+  background:
+    radial-gradient(500px 200px at 50% 0%, rgba(193,18,31,.2), transparent 70%),
+    linear-gradient(160deg,#1a0c29,#0b0515);
+  border:1px solid rgba(255,122,24,.3);
+  box-shadow:0 0 50px rgba(139,47,201,.22), 0 20px 50px rgba(0,0,0,.6);
+}
+.lives-card h2{
+  font-family:'Creepster',cursive;font-weight:400;margin:0 0 14px;
+  font-size:1.6rem;letter-spacing:1.2px;color:var(--orange-3);
+  text-shadow:0 0 20px rgba(255,122,24,.7);
+}
+.hearts{display:flex;gap:12px;justify-content:center;margin-bottom:16px}
+.heart-icon{
+  font-size:2.1rem;line-height:1;
+  filter:drop-shadow(0 0 14px rgba(255,60,60,.85));
+  animation:heartbeat 1.8s ease-in-out infinite;
+}
+.heart-icon:nth-child(2){animation-delay:.3s}
+.heart-icon:nth-child(3){animation-delay:.6s}
+@keyframes heartbeat{0%,100%{transform:scale(1)}30%{transform:scale(1.18)}60%{transform:scale(.96)}}
+.lives-card p{margin:8px 0 0;color:var(--muted);font-size:.88rem;line-height:1.75}
+.lives-card .revive-info{
+  margin-top:14px;padding:12px 16px;border-radius:12px;
+  background:rgba(193,18,31,.12);border:1px solid rgba(255,122,24,.25);
+  font-size:.82rem;color:#ffd9a8;
+}
+
+/* tabs */
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.tab-btn{
+  cursor:pointer;padding:12px 22px;border-radius:12px;
+  font-family:inherit;font-weight:800;font-size:.72rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);background:rgba(139,47,201,.12);
+  border:1px solid rgba(255,122,24,.25);
+  transition:.28s;
+}
+.tab-btn:hover{color:var(--orange-2);border-color:rgba(255,122,24,.5);transform:translateY(-2px)}
+.tab-btn.active{
+  color:#1a0a04;
+  background:linear-gradient(180deg,var(--orange-2),var(--orange));
+  border-color:transparent;
+  box-shadow:0 0 28px rgba(255,122,24,.6);
+  transform:translateY(-2px);
+}
+.tab-panel{display:none;text-align:left}
+.tab-panel.active{display:block;animation:panelIn .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes panelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* details / chapters */
+details{
+  margin-bottom:14px;border-radius:16px;overflow:hidden;
+  background:var(--card);
+  border:1px solid var(--line);
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  transition:border-color .3s, box-shadow .3s;
+}
+details[open]{
+  border-color:rgba(255,122,24,.6);
+  box-shadow:0 0 36px rgba(255,122,24,.2), 0 16px 36px rgba(0,0,0,.5);
+}
+summary{
+  cursor:pointer;padding:18px 22px;list-style:none;
+  display:flex;align-items:center;gap:14px;
+  font-weight:800;font-size:.9rem;letter-spacing:.04em;
+  color:var(--orange-2);text-shadow:0 0 12px rgba(255,122,24,.4);
+  transition:.25s;
+}
+summary::-webkit-details-marker{display:none}
+summary::after{
+  content:"+";margin-left:auto;font-size:1.4rem;font-weight:400;
+  color:var(--orange);transition:transform .35s;
+  text-shadow:0 0 14px rgba(255,122,24,.8);
+}
+details[open] summary::after{transform:rotate(45deg)}
+summary:hover{color:var(--orange-3);background:rgba(255,122,24,.06)}
+.ch-num{
+  display:grid;place-items:center;width:34px;height:34px;flex:0 0 34px;
+  border-radius:10px;font-family:'Creepster',cursive;font-size:1rem;
+  color:#1a0a04;background:linear-gradient(180deg,var(--orange-2),var(--orange));
+  box-shadow:0 0 18px rgba(255,122,24,.6);
+}
+.ch-body{
+  padding:0 22px 22px 22px;
+  color:var(--muted);font-size:.9rem;line-height:1.8;
+}
+.ch-body p{margin:0 0 12px}
+.ch-body p:last-child{margin-bottom:0}
+.ch-body strong{color:var(--orange-2);font-weight:700}
+.ch-body .arrow{color:var(--orange);font-weight:700}
+
+/* tip list */
+.tip-list{padding:0 22px 22px;margin:0;list-style:none}
+.tip-list li{
+  position:relative;padding:11px 0 11px 28px;
+  color:var(--muted);font-size:.9rem;line-height:1.75;
+  border-bottom:1px solid rgba(255,122,24,.08);
+}
+.tip-list li:last-child{border-bottom:0}
+.tip-list li::before{
+  content:"▸";position:absolute;left:4px;top:11px;
+  color:var(--orange);text-shadow:0 0 10px rgba(255,122,24,.8);
+}
+.tip-list strong{color:var(--orange-2)}
+
+.guide-back{margin:34px 0 0;display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+
+/* ============================================================
+   PORTAL TRANSITION OVERLAY
+   ============================================================ */
+#portal{
+  position:fixed;inset:0;z-index:200;pointer-events:none;
+  opacity:0;transition:opacity .45s ease;
+  display:grid;place-items:center;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,170,60,.95), rgba(255,122,24,.7) 22%, rgba(139,47,201,.55) 46%, rgba(8,5,14,.99) 78%);
+}
+#portal.on{opacity:1;pointer-events:auto}
+.portal-ring{
+  position:absolute;border-radius:50%;
+  border:2px solid rgba(255,217,168,.65);
+  box-shadow:0 0 40px rgba(255,122,24,.9), 0 0 80px rgba(139,47,201,.6) inset;
+  opacity:0;
+}
+#portal.on .portal-ring{animation:ringOut 1s cubic-bezier(.2,.8,.2,1) forwards}
+.portal-ring.r1{animation-delay:0s !important}
+.portal-ring.r2{animation-delay:.09s !important}
+.portal-ring.r3{animation-delay:.18s !important}
+@keyframes ringOut{
+  0%{width:40px;height:40px;opacity:0;transform:scale(.4)}
+  35%{opacity:1}
+  100%{width:190vmax;height:190vmax;opacity:0;transform:scale(1)}
+}
+.portal-icon{
+  position:relative;font-size:4rem;opacity:0;
+  filter:drop-shadow(0 0 30px rgba(0,0,0,.8));
+}
+#portal.on .portal-icon{animation:iconPop .9s ease forwards}
+@keyframes iconPop{
+  0%{opacity:0;transform:scale(.3) rotate(-25deg)}
+  45%{opacity:1;transform:scale(1.15) rotate(6deg)}
+  100%{opacity:0;transform:scale(1.6) rotate(0)}
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer{
+  position:relative;z-index:5;
+  padding:0 20px 40px;text-align:center;
+  font-size:.75rem;letter-spacing:.06em;color:#6b5b84;
+}
+.footer strong{color:var(--orange-2);font-weight:800}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:760px){
+  .stage{padding:96px 14px 56px}
+  .idea-inner{padding:26px 20px 26px}
+  .play-btn{padding:18px 36px;gap:12px;border-radius:18px}
+  .play-icon{width:38px;height:38px;font-size:.85rem}
+  .pumpkin-fx{width:48px}
+  .pf1,.pf2,.pf3,.pf4{width:44px}
+  .pf3{display:none}
+  .bat{width:52px}
+  .cobweb{width:150px;opacity:.16}
+  .brand{font-size:1rem}
+  summary{padding:15px 16px;font-size:.83rem;gap:10px}
+  .ch-body{padding:0 16px 18px 16px;font-size:.86rem}
+  .tip-list{padding:0 16px 18px}
+  .tab-btn{padding:10px 14px;font-size:.65rem}
+  .lives-card{padding:22px 18px}
+}
+@media (max-width:420px){
+  .btn{padding:13px 22px;font-size:.78rem}
+  .play-btn{padding:16px 26px;letter-spacing:1.6px}
+  .ch-num{width:28px;height:28px;flex:0 0 28px;font-size:.85rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     SVG DEFS
+     ============================================================ -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <radialGradient id="pkGrad" cx="36%" cy="30%">
+      <stop offset="0%" stop-color="#ffd9a8"/>
+      <stop offset="45%" stop-color="#ff9b2f"/>
+      <stop offset="100%" stop-color="#b34100"/>
+    </radialGradient>
+    <linearGradient id="stemGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#63a83e"/>
+      <stop offset="100%" stop-color="#2c5c1c"/>
+    </linearGradient>
+  </defs>
+  <symbol id="pumpkin" viewBox="0 0 100 100">
+    <path d="M48 22c0-6 2-10 6-13" stroke="url(#stemGrad)" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <ellipse cx="50" cy="58" rx="40" ry="32" fill="url(#pkGrad)"/>
+    <ellipse cx="50" cy="58" rx="26" ry="32" fill="none" stroke="rgba(0,0,0,.16)" stroke-width="2"/>
+    <ellipse cx="50" cy="58" rx="13" ry="32" fill="none" stroke="rgba(0,0,0,.13)" stroke-width="2"/>
+    <path d="M33 52l7-11 7 11z" fill="#2a0f00"/>
+    <path d="M53 52l7-11 7 11z" fill="#2a0f00"/>
+    <path d="M33 66q17 15 34 0" stroke="#2a0f00" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<!-- ============================================================
+     AMBIENT DECOR
+     ============================================================ -->
+<div class="fx" aria-hidden="true">
+  <svg class="bat b1" viewBox="0 0 100 40"><path d="M50 20C42 8 30 3 17 7 9 10 3 17 1 26c8-5 13-1 17 4 4-8 12-8 16-2 4-8 11-10 16-6 5-4 12-2 16 6 4-6 12-6 16 2 4-5 9-9 17-4-2-9-8-16-16-19C71 3 58 8 50 20Z" fill="#150b22" stroke="#ff7a18" stroke-opacity=".6" stroke-width="1.4"/></svg>
+  <svg class="bat b2" viewBox="0 0 100 40"><path d="M50 20C42 8 30 3 17 7 9 10 3 17 1 26c8-5 13-1 17 4 4-8 12-8 16-2 4-8 11-10 16-6 5-4 12-2 16 6 4-6 12-6 16 2 4-5 9-9 17-4-2-9-8-16-16-19C71 3 58 8 50 20Z" fill="#150b22" stroke="#ff7a18" stroke-opacity=".6" stroke-width="1.4"/></svg>
+  <svg class="bat b3" viewBox="0 0 100 40"><path d="M50 20C42 8 30 3 17 7 9 10 3 17 1 26c8-5 13-1 17 4 4-8 12-8 16-2 4-8 11-10 16-6 5-4 12-2 16 6 4-6 12-6 16 2 4-5 9-9 17-4-2-9-8-16-16-19C71 3 58 8 50 20Z" fill="#150b22" stroke="#ff7a18" stroke-opacity=".6" stroke-width="1.4"/></svg>
+  <svg class="bat b4" viewBox="0 0 100 40"><path d="M50 20C42 8 30 3 17 7 9 10 3 17 1 26c8-5 13-1 17 4 4-8 12-8 16-2 4-8 11-10 16-6 5-4 12-2 16 6 4-6 12-6 16 2 4-5 9-9 17-4-2-9-8-16-16-19C71 3 58 8 50 20Z" fill="#150b22" stroke="#ff7a18" stroke-opacity=".6" stroke-width="1.4"/></svg>
+  <svg class="bat b5" viewBox="0 0 100 40"><path d="M50 20C42 8 30 3 17 7 9 10 3 17 1 26c8-5 13-1 17 4 4-8 12-8 16-2 4-8 11-10 16-6 5-4 12-2 16 6 4-6 12-6 16 2 4-5 9-9 17-4-2-9-8-16-16-19C71 3 58 8 50 20Z" fill="#150b22" stroke="#ff7a18" stroke-opacity=".6" stroke-width="1.4"/></svg>
+
+  <svg class="cobweb tl" viewBox="0 0 200 200" fill="none" stroke="#e8dcff" stroke-width="1.1">
+    <path d="M0 0L200 0M0 0L186 74M0 0L148 134M0 0L74 186M0 0L0 200"/>
+    <path d="M52 0A52 52 0 0 1 0 52M104 0A104 104 0 0 1 0 104M156 0A156 156 0 0 1 0 156M200 0A200 200 0 0 1 0 200"/>
+  </svg>
+  <svg class="cobweb tr" viewBox="0 0 200 200" fill="none" stroke="#e8dcff" stroke-width="1.1">
+    <path d="M0 0L200 0M0 0L186 74M0 0L148 134M0 0L74 186M0 0L0 200"/>
+    <path d="M52 0A52 52 0 0 1 0 52M104 0A104 104 0 0 1 0 104M156 0A156 156 0 0 1 0 156M200 0A200 200 0 0 1 0 200"/>
+  </svg>
+  <svg class="cobweb bl" viewBox="0 0 200 200" fill="none" stroke="#e8dcff" stroke-width="1.1">
+    <path d="M0 0L200 0M0 0L186 74M0 0L148 134M0 0L74 186M0 0L0 200"/>
+    <path d="M52 0A52 52 0 0 1 0 52M104 0A104 104 0 0 1 0 104M156 0A156 156 0 0 1 0 156M200 0A200 200 0 0 1 0 200"/>
+  </svg>
+  <svg class="cobweb br" viewBox="0 0 200 200" fill="none" stroke="#e8dcff" stroke-width="1.1">
+    <path d="M0 0L200 0M0 0L186 74M0 0L148 134M0 0L74 186M0 0L0 200"/>
+    <path d="M52 0A52 52 0 0 1 0 52M104 0A104 104 0 0 1 0 104M156 0A156 156 0 0 1 0 156M200 0A200 200 0 0 1 0 200"/>
+  </svg>
+</div>
+
+<svg class="pumpkin-fx pf1" aria-hidden="true"><use href="#pumpkin"/></svg>
+<svg class="pumpkin-fx pf2" aria-hidden="true"><use href="#pumpkin"/></svg>
+<svg class="pumpkin-fx pf3" aria-hidden="true"><use href="#pumpkin"/></svg>
+<svg class="pumpkin-fx pf4" aria-hidden="true"><use href="#pumpkin"/></svg>
+
+<div id="embers" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<header class="nav">
+  <div class="brand">ESCAPE THE SCHOOL</div>
+  <div class="nav-spacer"></div>
+  <button class="lang-btn" id="langBtn" type="button">ქარ</button>
+</header>
+
+<!-- ============================================================
+     STAGE
+     ============================================================ -->
+<main class="stage">
+
+  <!-- ---------- SCREEN 1: IDEA ---------- -->
+  <section class="screen active" id="screen-idea">
+    <h1 class="logo">ESCAPE THE SCHOOL</h1>
+    <span class="eyebrow" data-en="Halloween Disturbance · Episode 2" data-ka="ჰელოუინის არეულობა · ეპიზოდი 2">Halloween Disturbance · Episode 2</span>
+    <div class="divider"></div>
+
+    <div class="idea-card">
+      <div class="idea-inner">
+        <h2 data-en="Share Your Idea" data-ka="გაგზავნე შენი იდეა">Share Your Idea</h2>
+        <p class="idea-sub"
+           data-en="Got a spooky idea for Episode 2? Drop it below — the admin team reads every single one."
+           data-ka="გაქვს საშიში იდეა მე-2 ეპიზოდისთვის? დაწერე ქვემოთ — ადმინისტრაცია ყველას კითხულობს.">Got a spooky idea for Episode 2? Drop it below — the admin team reads every single one.</p>
+
+        <label class="field-label" for="ideaInput" data-en="Your idea" data-ka="შენი იდეა">Your idea</label>
+        <textarea id="ideaInput"
+          data-ph-en="e.g. A mirror room where Mr. Grimm appears behind you…"
+          data-ph-ka="მაგ.: სარკეების ოთახი, სადაც მისტერ გრიმი უკან გამოჩნდება…"
+          placeholder="e.g. A mirror room where Mr. Grimm appears behind you…"></textarea>
+
+        <div class="idea-actions">
+          <button class="btn btn-primary" id="sendIdeaBtn" type="button">
+            🎃 <span data-en="Send Idea" data-ka="იდეის გაგზავნა">Send Idea</span>
+          </button>
+        </div>
+
+        <p class="hint" data-en="After sending, you'll enter the main menu." data-ka="გაგზავნის შემდეგ მთავარ მენიუში გადახვალ.">After sending, you'll enter the main menu.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- SCREEN 2: MAIN MENU ---------- -->
+  <section class="screen" id="screen-menu">
+    <div class="menu-wrap">
+      <h1 class="logo">ESCAPE THE SCHOOL</h1>
+      <p class="menu-title"
+         data-en="Halloween Disturbance: Episode 2 — <em>The Vanishing Class</em>"
+         data-ka="ჰელოუინის არეულობა: ეპიზოდი 2 — <em>გაუჩინარებული კლასი</em>">Halloween Disturbance: Episode 2 — <em>The Vanishing Class</em></p>
+      <div class="divider"></div>
+
+      <a class="play-btn"
+         href="https://www.roblox.com/games/103062263643693/ESCAPE-THE-SCHOOL"
+         target="_blank" rel="noopener noreferrer">
+        <span class="play-icon">▶</span>
+        <span data-en="PLAY NOW" data-ka="თამაში ახლა">PLAY NOW</span>
+      </a>
+
+      <div class="menu-badges">
+        <span class="chip" data-en="Roblox" data-ka="Roblox">Roblox</span>
+        <span class="chip" data-en="Co-op Survival" data-ka="ერთობლივი გადარჩენა">Co-op Survival</span>
+        <span class="chip" data-en="Episode 2" data-ka="ეპიზოდი 2">Episode 2</span>
+      </div>
+
+      <div class="menu-actions">
+        <button class="btn btn-ghost" id="guideBtn" type="button">
+          📖 <span data-en="Game Guide" data-ka="თამაშის გზამკვლევი">Game Guide</span>
+        </button>
+        <button class="btn btn-ghost" id="backToIdeaBtn" type="button">
+          💡 <span data-en="Send Another Idea" data-ka="კიდევ ერთი იდეის გაგზავნა">Send Another Idea</span>
+        </button>
+      </div>
+
+      <p class="menu-note"
+         data-en="PLAY opens the official Roblox page in a new tab. See you in the halls… if you survive."
+         data-ka="PLAY გახსნის ოფიციალურ Roblox გვერდს ახალ ჩანართში. შევხვდებით დერეფნებში… თუ გადარჩებით.">PLAY opens the official Roblox page in a new tab. See you in the halls… if you survive.</p>
+    </div>
+  </section>
+
+  <!-- ---------- SCREEN 3: GAME GUIDE ---------- -->
+  <section class="screen" id="screen-guide">
+    <div class="guide-wrap">
+      <h1 class="guide-title" data-en="GAME GUIDE" data-ka="თამაშის გზამკვლევი">GAME GUIDE</h1>
+      <span class="eyebrow" data-en="Lives · Part 1 · Part 2 · Survival Tips" data-ka="სიცოცხლეები · ნაწილი 1 · ნაწილი 2 · გადარჩენის რჩევები">Lives · Part 1 · Part 2 · Survival Tips</span>
+      <div class="divider"></div>
+
+      <!-- ===== LIVES ===== -->
+      <div class="lives-card">
+        <h2 data-en="Lives (Whole Game)" data-ka="სიცოცხლეები (მთელ თამაშზე)">Lives (Whole Game)</h2>
+        <div class="hearts" aria-hidden="true">
+          <span class="heart-icon">❤️</span>
+          <span class="heart-icon">❤️</span>
+          <span class="heart-icon">❤️</span>
+        </div>
+        <p data-en="You start the game with 3 lives — 3 hearts appear in the top right. If a monster or infected catches you, you lose 1 life and return to the last checkpoint. After returning, no one can catch you for 3 seconds."
+           data-ka="თამაშს 3 სიცოცხლით იწყებ, მარჯვნივ ზემოთ 3 გული ჩანს. მონსტრი ან ინფიცირებული თუ დაგიჭერს, 1 სიცოცხლეს კარგავ და ბოლო checkpoint-ზე ბრუნდები. დაბრუნების შემდეგ 3 წამით ვერავინ დაგიჭერს.">You start the game with 3 lives — 3 hearts appear in the top right. If a monster or infected catches you, you lose 1 life and return to the last checkpoint. After returning, no one can catch you for 3 seconds.</p>
+        <div class="revive-info"
+             data-en="When you run out of lives, the &quot;BACK TO SCHOOL&quot; screen appears with two buttons: +1 Life (15 R$) or Try Again."
+             data-ka="სიცოცხლე რომ აღარ დაგრჩება, ჩნდება ეკრანი „უკან სკოლაში“ (BACK TO SCHOOL). იქ ორი ღილაკია: +1 სიცოცხლე (15 R$) ან თავიდან ცდა.">When you run out of lives, the "BACK TO SCHOOL" screen appears with two buttons: +1 Life (15 R$) or Try Again.</div>
+      </div>
+
+      <!-- ===== TABS ===== -->
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="part1" type="button">
+          <span data-en="Part 1 · Escape" data-ka="ნაწილი 1 · გაქცევა">Part 1 · Escape</span>
+        </button>
+        <button class="tab-btn" data-tab="part2" type="button">
+          <span data-en="Part 2 · Outbreak" data-ka="ნაწილი 2 · გავრცელება">Part 2 · Outbreak</span>
+        </button>
+        <button class="tab-btn" data-tab="tips" type="button">
+          <span data-en="Survival Tips" data-ka="გადარჩენის რჩევები">Survival Tips</span>
+        </button>
+      </div>
+
+      <!-- ===== PART 1 ===== -->
+      <div class="tab-panel active" id="tab-part1">
+
+        <details open>
+          <summary><span class="ch-num">00</span><span data-en="Prologue — Home → Classroom" data-ka="პროლოგი — სახლი → საკლასო ოთახი">Prologue — Home → Classroom</span></summary>
+          <div class="ch-body">
+            <p data-en="Turn off the alarm, read the phone, get dressed, take the bag, and head to the bus stop."
+               data-ka="გამორთე მაღვიძარა, წაიკითხე ტელეფონი, ჩაიცვი, აიღე ჩანთა და გადი ავტობუსის გაჩერებაზე.">Turn off the alarm, read the phone, get dressed, take the bag, and head to the bus stop.</p>
+            <p data-en="Bus → School → Classroom: sit at your desk and listen to the teacher."
+               data-ka="ავტობუსი → სკოლა → საკლასო ოთახი: დაჯექი შენს მერხთან და მოუსმინე მასწავლებელს.">Bus → School → Classroom: sit at your desk and listen to the teacher.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">01</span><span data-en="Classroom — Papers & Lockers" data-ka="თავი 1 — კლასი: ფურცლები და კარადები">Classroom — Papers & Lockers</span></summary>
+          <div class="ch-body">
+            <p data-en="Collect the papers — they contain the locker code. The key is in one of the lockers (one locker has a scary surprise). Open the door with the key."
+               data-ka="შეაგროვე ფურცლები, მათზე უჯრის კოდია. გასაღები ერთ-ერთ კარადაშია (ერთ კარადაში შემაშინებელი სიურპრიზი გელის). გასაღებით კარს გააღებ.">Collect the papers — they contain the locker code. The key is in one of the lockers (one locker has a scary surprise). Open the door with the key.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">02</span><span data-en="Hallway — Fuses & Janitor" data-ka="თავი 2 — დერეფანი: დამცველები და დამლაგებელი">Hallway — Fuses & Janitor</span></summary>
+          <div class="ch-body">
+            <p data-en="Find 3 fuses and put them in the power box. Then take the keys from the janitor's cart and open the cafeteria door."
+               data-ka="იპოვე 3 დამცველი და ჩადე დენის ყუთში. მერე დამლაგებლის ურიკიდან აიღე გასაღებები და გააღე სასადილოს კარი.">Find 3 fuses and put them in the power box. Then take the keys from the janitor's cart and open the cafeteria door.</p>
+            <p data-en="The janitor patrols the hallway. If he sees you, hide in a locker."
+               data-ka="დამლაგებელი პატრულირებს. თუ დაგინახა, კარადაში დაიმალე.">The janitor patrols the hallway. If he sees you, hide in a locker.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">03</span><span data-en="Cafeteria — Recipe & Cook" data-ka="თავი 3 — სასადილო: რეცეპტი და მზარეული">Cafeteria — Recipe & Cook</span></summary>
+          <div class="ch-body">
+            <p data-en="Find the recipe — it has the fridge's 3-digit code. The hall key is inside the fridge."
+               data-ka="იპოვე რეცეპტი, მასზე მაცივრის 3-ციფრიანი კოდია. მაცივარში დარბაზის გასაღებია.">Find the recipe — it has the fridge's 3-digit code. The hall key is inside the fridge.</p>
+            <p data-en="When you take the key, the cook wakes up. You can buy items with coins at the buffet."
+               data-ka="გასაღებს რომ აიღებ, მზარეული იღვიძებს. ბუფეტში მონეტებით ნივთების ყიდვა შეგიძლია.">When you take the key, the cook wakes up. You can buy items with coins at the buffet.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">04</span><span data-en="Gym — Ventilation Shaft" data-ka="თავი 4 — სპორტდარბაზი: სავენტილაციო არხი">Gym — Ventilation Shaft</span></summary>
+          <div class="ch-body">
+            <p data-en="Take the screwdriver, open the ventilation shaft, and crawl inside."
+               data-ka="აიღე სახრახნისი, გახსენი სავენტილაციო არხი და შეძვერი შიგნით.">Take the screwdriver, open the ventilation shaft, and crawl inside.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">05</span><span data-en="Principal's Office — The Safe" data-ka="თავი 5 — დირექტორის კაბინეტი: სეიფი">Principal's Office — The Safe</span></summary>
+          <div class="ch-body">
+            <p data-en="Guess the safe code from the photos and the recording. The main key is in the safe — it opens the office door."
+               data-ka="ფოტოებიდან და ჩანაწერიდან გამოიცანი სეიფის კოდი. სეიფში მთავარი გასაღებია, მისით კაბინეტის კარს გააღებ.">Guess the safe code from the photos and the recording. The main key is in the safe — it opens the office door.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">06</span><span data-en="Final Bell — Run from Grimm" data-ka="თავი 6 — ბოლო ზარი: გაქცევა გრიმისგან">Final Bell — Run from Grimm</span></summary>
+          <div class="ch-body">
+            <p data-en="Grimm chases you and always sees where you are, no matter where you hide. Just run to the exit with SHIFT."
+               data-ka="გრიმი გდევს და ყოველთვის ხედავს, სადაც არ უნდა იყო. უბრალოდ გაიქეცი გასასვლელისკენ, SHIFT-ით.">Grimm chases you and always sees where you are, no matter where you hide. Just run to the exit with SHIFT.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">★</span><span data-en="Ending — The Bus Ride" data-ka="დასასრული — ავტობუსში">Ending — The Bus Ride</span></summary>
+          <div class="ch-body">
+            <p data-en="You sit on the bus, and the driver tells you: &quot;School never ends...&quot;"
+               data-ka="ავტობუსში სხდებით, მძღოლი კი გეუბნება: „სკოლა არასდროს მთავრდება...“">You sit on the bus, and the driver tells you: "School never ends..."</p>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- ===== PART 2 ===== -->
+      <div class="tab-panel" id="tab-part2">
+
+        <details open>
+          <summary><span class="ch-num">01</span><span data-en="Investigation — 3 Clues" data-ka="გამოძიება — 3 მინიშნება">Investigation — 3 Clues</span></summary>
+          <div class="ch-body">
+            <p data-en="Find 3 clues: a letter on the reception table; a laptop in your room on the desk; a diary on your bed."
+               data-ka="იპოვე 3 მინიშნება: წერილი მისაღების მაგიდაზე; ლეპტოპი შენს ოთახში, მაგიდაზე; დღიური შენს საწოლზე.">Find 3 clues: a letter on the reception table; a laptop in your room on the desk; a diary on your bed.</p>
+            <p data-en="Everything is stored in the journal (J)."
+               data-ka="ყველაფერი ჟურნალში ინახება (J).">Everything is stored in the journal (J).</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">02</span><span data-en="Planes — Green Fog" data-ka="თვითმფრინავები — მწვანე ნისლი">Planes — Green Fog</span></summary>
+          <div class="ch-body">
+            <p data-en="After the noise, look out the reception window. You'll see planes spraying green fog over the city."
+               data-ka="ხმაურის შემდეგ მისაღების ფანჯრიდან გაიხედე. დაინახავ, როგორ აფრქვევენ თვითმფრინავები ქალაქზე მწვანე ნისლს.">After the noise, look out the reception window. You'll see planes spraying green fog over the city.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">03</span><span data-en="TV — The News" data-ka="ტელევიზორი — სიახლეები">TV — The News</span></summary>
+          <div class="ch-body">
+            <p data-en="The news shows the infected count rising to 100. They grab people and drag them to schools."
+               data-ka="ახალ ამბებში ინფიცირებულების რიცხვი 100-მდე იზრდება. ისინი ადამიანებს იჭერენ და სკოლებისკენ მიათრევენ.">The news shows the infected count rising to 100. They grab people and drag them to schools.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">04</span><span data-en="Memory — The Box" data-ka="მოგონება — ყუთი">Memory — The Box</span></summary>
+          <div class="ch-body">
+            <p data-en="Dad tells you there's a box under the bed and the code is your birthday."
+               data-ka="მამა გეუბნება, რომ საწოლის ქვეშ ყუთი აქვს და კოდი შენი დაბადების დღეა.">Dad tells you there's a box under the bed and the code is your birthday.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">05</span><span data-en="Father's Box — Code 1407" data-ka="მამის ყუთი — კოდი 1407">Father's Box — Code 1407</span></summary>
+          <div class="ch-body">
+            <p data-en="It's in your parents' bedroom, under the bed. The code is 1407 — the hint is on the calendar hanging on the fridge. Inside is a pistol with 15 bullets."
+               data-ka="მშობლების საძინებელშია, საწოლის ქვეშ. კოდია 1407, მინიშნება მაცივარზე ჩამოკიდებულ კალენდარზეა. შიგნით პისტოლეტია, 15 ტყვიით.">It's in your parents' bedroom, under the bed. The code is 1407 — the hint is on the calendar hanging on the fridge. Inside is a pistol with 15 bullets.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">06</span><span data-en="Invasion — Break the Window" data-ka="შემოჭრა — ფანჯრის ჩამსხვრევა">Invasion — Break the Window</span></summary>
+          <div class="ch-body">
+            <p data-en="The infected break the window. Run out the back door. If they get too close, hide in the closet — in your room or your parents' room."
+               data-ka="ინფიცირებულები ფანჯარას ამსხვრევენ. გაიქეცი უკანა კარიდან. თუ ძალიან მოგიახლოვდნენ, კარადაში დაიმალე: შენს ოთახში ან მშობლების ოთახში.">The infected break the window. Run out the back door. If they get too close, hide in the closet — in your room or your parents' room.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">07</span><span data-en="Street — Safe & Radio" data-ka="ქუჩა — სეიფი და რადიო">Street — Safe & Radio</span></summary>
+          <div class="ch-body">
+            <p data-en="The safe code is on a receipt on a trash container next to the Corner 24/7 store. The code changes every game. The safe is in the store's back room. Open it and take the radio."
+               data-ka="სეიფის კოდი ნაგვის კონტეინერზე დადებულ ქვითარზე წერია, Corner 24/7 მაღაზიის გვერდით. კოდი ყოველ თამაშზე სხვაა. სეიფი მაღაზიის უკანა ოთახშია. გახსენი და აიღე რადიო.">The safe code is on a receipt on a trash container next to the Corner 24/7 store. The code changes every game. The safe is in the store's back room. Open it and take the radio.</p>
+            <p data-en="The road west is blocked — quarantine, nothing there."
+               data-ka="დასავლეთით გზა ჩაკეტილია, კარანტინია, იქ წასასვლელი არაფერია.">The road west is blocked — quarantine, nothing there.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">08</span><span data-en="Depot — Hold the Lever" data-ka="დეპო — ბერკეტის დაჭერა">Depot — Hold the Lever</span></summary>
+          <div class="ch-body">
+            <p data-en="Hold the lever at the generator. The gate opens in 24 seconds and 3 waves come during that time. These infected always know where you are, so shoot them."
+               data-ka="გენერატორთან ბერკეტი დაიჭირე. ჭიშკარი 24 წამში იღება და ამ დროს 3 ტალღა მოდის. ეს ინფიცირებულები ყოველთვის იციან, სად ხარ, ამიტომ ესროლე.">Hold the lever at the generator. The gate opens in 24 seconds and 3 waves come during that time. These infected always know where you are, so shoot them.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary><span class="ch-num">★</span><span data-en="Wagon — The Truth" data-ka="ვაგონი — სიმართლე">Wagon — The Truth</span></summary>
+          <div class="ch-body">
+            <p data-en="Play the video on the laptop. It turns out the principal organized everything to bring runaway students back to school. After that, &quot;TO BE CONTINUED&quot; appears."
+               data-ka="ლეპტოპზე ჩართე ვიდეო. აღმოჩნდება, რომ ყველაფერი დირექტორმა მოაწყო, რომ გაქცეული მოსწავლეები სკოლაში დააბრუნოს. ამის შემდეგ ჩნდება წარწერა „გაგრძელება იქნება“.">Play the video on the laptop. It turns out the principal organized everything to bring runaway students back to school. After that, "TO BE CONTINUED" appears.</p>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- ===== TIPS ===== -->
+      <div class="tab-panel" id="tab-tips">
+        <details open>
+          <summary><span class="ch-num">!</span><span data-en="How to Survive" data-ka="როგორ გადარჩე">How to Survive</span></summary>
+          <ul class="tip-list">
+            <li data-en="Infected can't see through walls. Use houses, cars, and containers as cover. The only exception is the waves at the gate."
+                data-ka="ინფიცირებულები კედლებში ვერ ხედავენ. სახლებს, მანქანებს და კონტეინერებს ფარად იყენებ. გამონაკლისია მხოლოდ ტალღები ჭიშკართან.">Infected can't see through walls. Use houses, cars, and containers as cover. The only exception is the waves at the gate.</li>
+            <li data-en="Trash containers, closets, and toilet stalls are hiding spots. Hide with E. If you have a pursuer, they lose you immediately. To exit, press E or LEAVE."
+                data-ka="ნაგვის კონტეინერი, კარადა და ტუალეტის ჯიხური სამალავებია. დაიმალე E-ით. თუ მდევარი გყავს, ის მაშინვე გკარგავს. გამოსასვლელად ისევ E ან LEAVE.">Trash containers, closets, and toilet stalls are hiding spots. Hide with E. If you have a pursuer, they lose you immediately. To exit, press E or LEAVE.</li>
+            <li data-en="The pistol doesn't kill — it only stuns an infected for 7 seconds. Shoot and run immediately."
+                data-ka="პისტოლეტი არ კლავს, ინფიცირებულს მხოლოდ 7 წამით აგდებს. ესროლე და მაშინვე გაიქეცი.">The pistol doesn't kill — it only stuns an infected for 7 seconds. Shoot and run immediately.</li>
+            <li data-en="Ammo is scarce: max 30. A yellow AMMO box gives +8 bullets and respawns in 45 seconds."
+                data-ka="ტყვია ცოტაა: მაქსიმუმ 30. ყვითელი AMMO ყუთი +8 ტყვიას გაძლევს და 45 წამში ისევ ჩნდება.">Ammo is scarce: max 30. A yellow AMMO box gives +8 bullets and respawns in 45 seconds.</li>
+            <li data-en="Escape with SHIFT: infected are fast, so don't run in a straight line. Use corners and try to hide."
+                data-ka="SHIFT-ით გაქცევა: ინფიცირებული სწრაფია, ამიტომ პირდაპირ ხაზზე ნუ გარბიხარ. კუთხეებს უხვიე და მიმალვას ეცადე.">Escape with SHIFT: infected are fast, so don't run in a straight line. Use corners and try to hide.</li>
+            <li data-en="With friends: one guards the lever at the gate, the others shoot."
+                data-ka="მეგობრებთან ერთად: ჭიშკართან ერთი ბერკეტს იცავს, დანარჩენები ისვრიან.">With friends: one guards the lever at the gate, the others shoot.</li>
+            <li data-en="On the next game, Part 2 will be unlocked and it will offer to start from there. A PART 2 button has been added to the Staff Room."
+                data-ka="შემდეგ თამაშზე ნაწილი 2 გახსნილი იქნება და პირდაპირ იქიდან დაწყებას შემოგთავაზებს. Staff Room-ში დაემატა ღილაკი PART 2.">On the next game, Part 2 will be unlocked and it will offer to start from there. A PART 2 button has been added to the Staff Room.</li>
+          </ul>
+        </details>
+      </div>
+
+      <!-- back -->
+      <div class="guide-back">
+        <button class="btn btn-ghost" id="guideBackBtn" type="button">
+          ← <span data-en="Back to Menu" data-ka="მთავარ მენიუში დაბრუნება">Back to Menu</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p><strong>ESCAPE THE SCHOOL</strong> — <span data-en="Halloween Disturbance: Episode 2" data-ka="ჰელოუინის არეულობა: ეპიზოდი 2">Halloween Disturbance: Episode 2</span></p>
+  <p style="margin-top:8px"
+     data-en="Fan-made concept page · Not affiliated with Roblox Corporation"
+     data-ka="გულშემატკივრის მიერ შექმნილი კონცეფცია · არ არის დაკავშირებული Roblox Corporation-თან">Fan-made concept page · Not affiliated with Roblox Corporation</p>
+</footer>
+
+<!-- ============================================================
+     PORTAL OVERLAY
+     ============================================================ -->
+<div id="portal" aria-hidden="true">
+  <div class="portal-ring r1"></div>
+  <div class="portal-ring r2"></div>
+  <div class="portal-ring r3"></div>
+  <div class="portal-icon">🎃</div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ==========================================================
+     0. ELEMENTS
+     ========================================================== */
+  const screens = {
+    idea:  document.getElementById('screen-idea'),
+    menu:  document.getElementById('screen-menu'),
+    guide: document.getElementById('screen-guide')
+  };
+  const portal    = document.getElementById('portal');
+  const langBtn   = document.getElementById('langBtn');
+  const ideaInput = document.getElementById('ideaInput');
+  const sendBtn   = document.getElementById('sendIdeaBtn');
+  const backBtn   = document.getElementById('backToIdeaBtn');
+  const guideBtn  = document.getElementById('guideBtn');
+  const guideBack = document.getElementById('guideBackBtn');
+
+  let currentScreen = 'idea';
+  let lang = 'en';
+  let animating = false;
+
+  /* ==========================================================
+     1. EMBERS
+     ========================================================== */
+  const emberLayer = document.getElementById('embers');
+  const EMBER_COUNT = 26;
+  for (let i = 0; i < EMBER_COUNT; i++) {
+    const e = document.createElement('span');
+    e.className = 'ember';
+    const size = 2 + Math.random() * 4;
+    e.style.width  = size + 'px';
+    e.style.height = size + 'px';
+    e.style.left   = (Math.random() * 100) + 'vw';
+    e.style.animationDuration = (9 + Math.random() * 12) + 's';
+    e.style.animationDelay    = (-Math.random() * 20) + 's';
+    e.style.setProperty('--o', (0.2 + Math.random() * 0.55).toFixed(2));
+    emberLayer.appendChild(e);
+  }
+
+  /* ==========================================================
+     2. LANGUAGE
+     ========================================================== */
+  function applyLang(next) {
+    lang = next;
+    document.documentElement.lang = (lang === 'ka') ? 'ka' : 'en';
+
+    document.querySelectorAll('[data-en]').forEach(function (el) {
+      const val = el.getAttribute('data-' + lang);
+      if (val !== null) el.innerHTML = val;
+    });
+
+    const ph = ideaInput.getAttribute('data-ph-' + lang);
+    if (ph) ideaInput.placeholder = ph;
+
+    langBtn.textContent = (lang === 'en') ? 'ქარ' : 'EN';
+
+    if (!sendBtn.classList.contains('sent')) {
+      sendBtn.querySelector('span').innerHTML =
+        (lang === 'ka') ? 'იდეის გაგზავნა' : 'Send Idea';
+    }
+
+    try { localStorage.setItem('ets-lang', lang); } catch (e) {}
+  }
+
+  langBtn.addEventListener('click', function () {
+    applyLang(lang === 'en' ? 'ka' : 'en');
+  });
+
+  try {
+    const saved = localStorage.getItem('ets-lang');
+    if (saved === 'ka' || saved === 'en') applyLang(saved);
+  } catch (e) {}
+
+  /* ==========================================================
+     3. SCREEN TRANSITION (portal wipe)
+     ========================================================== */
+  function transitionTo(target) {
+    if (animating || target === currentScreen) return;
+    animating = true;
+
+    portal.classList.remove('on');
+    void portal.offsetWidth;
+    portal.classList.add('on');
+
+    setTimeout(function () {
+      screens[currentScreen].classList.remove('active');
+      screens[target].classList.add('active');
+
+      if (target === 'idea') {
+        ideaInput.value = '';
+        sendBtn.classList.remove('sent');
+        sendBtn.querySelector('span').innerHTML =
+          (lang === 'ka') ? 'იდეის გაგზავნა' : 'Send Idea';
+        setTimeout(function () { ideaInput.focus({ preventScroll: true }); }, 500);
+      }
+
+      currentScreen = target;
+      window.scrollTo({ top: 0, behavior: 'auto' });
+
+      portal.classList.remove('on');
+      setTimeout(function () { animating = false; }, 460);
+    }, 520);
+  }
+
+  /* ==========================================================
+     4. SEND IDEA
+     ========================================================== */
+  sendBtn.addEventListener('click', function () {
+    const value = ideaInput.value.trim();
+
+    if (!value) {
+      ideaInput.classList.add('shake');
+      ideaInput.focus();
+      setTimeout(function () { ideaInput.classList.remove('shake'); }, 500);
+      return;
+    }
+
+    sendBtn.classList.add('sent');
+    sendBtn.querySelector('span').innerHTML =
+      (lang === 'ka') ? 'იდეა გაიგზავნა ✓' : 'Idea sent ✓';
+
+    setTimeout(function () { transitionTo('menu'); }, 850);
+  });
+
+  ideaInput.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') sendBtn.click();
+  });
+
+  /* ==========================================================
+     5. NAVIGATION BUTTONS
+     ========================================================== */
+  backBtn.addEventListener('click', function () { transitionTo('idea'); });
+  guideBtn.addEventListener('click', function () { transitionTo('guide'); });
+  guideBack.addEventListener('click', function () { transitionTo('menu'); });
+
+  /* ==========================================================
+     6. GUIDE TABS
+     ========================================================== */
+  document.querySelectorAll('.tab-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const target = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      const panel = document.getElementById('tab-' + target);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
